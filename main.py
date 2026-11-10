@@ -65,20 +65,20 @@ class Cart:
         num = int(input("상품 번호 : "))
         # 제품 목록 중에서 없는 번호를 기입한 경우
         if find_product(num) is None:
-            return "장바구니에 없는 상품입니다."
+            print("장바구니에 없는 상품입니다.")
         # 제품 번호를 정상적으로 기입한 경우
         quantity = int(input("수량 : "))
         # 수량을 0보다 적게 기입한 경우
         if quantity <= 0:
-            return "수량을 1개 이상 입력하세요."
+            print("수량을 1개 이상 입력하세요.")
         total_quantity = self.products.get(num, 0) + quantity # 총 수량 계산
         # 수량이 제품 재고보다 많이 기입된 경우
         if quantity > find_product(num).get_inventory():
-            return "수량이 재고보다 많습니다."  
+            print("수량이 재고보다 많습니다.")
         else:
             self.products[num] = total_quantity
             find_product(num).set_inventory(find_product(num).get_inventory() - quantity)
-            return f"{find_product(num).name} {total_quantity}개를 담았습니다."
+            print(f"{find_product(num).name} {total_quantity}개를 담았습니다.")
     # 장바구니의 물품 빼기
     def remove_product(self):
         num = int(input("상품 번호 : "))
@@ -126,9 +126,9 @@ def show_products():
 
 product1 = Product("무선 이어폰", 1, 89_000, 3)
 product1 = Product("텀블러", 2, 15_000, 10)
-product1 = Product("텀블러", 3, 32_000, 5)
-product1 = Product("텀블러", 4, 9000, 0)
-product1 = Product("텀블러", 5, 18_000, 4)
+product1 = Product("보조배터리", 3, 32_000, 5)
+product1 = Product("마우스패드", 4, 9000, 0)
+product1 = Product("USB허브", 5, 18_000, 4)
 
 cart = Cart()
 
