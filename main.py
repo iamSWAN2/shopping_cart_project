@@ -42,19 +42,21 @@ class Cart:
     def show_in_cart(self):
         # 장바구니에 담긴 상품 총액
         cart_total_price = 0
+        print("-"*60)
         for product in self.products:
             product_price = find_product(product).get_price()
             product_total_price = self.products.get(product, 0) * product_price
             cart_total_price += product_total_price
-            print("-"*60)
             print(f"{find_product(product).name}   x   {self.products.get(product, 0)}    {product_total_price}원")
-            print("-"*60)
+        print("-"*60)
         # 배송비 계산
-        delivery_fee = 0
-        if cart_total_price >= 30000:
+        if not self.products:
             delivery_fee = 0
         else:
-            delivery_fee = 3000
+            if cart_total_price >= 30000:
+                delivery_fee = 0
+            else:
+                delivery_fee = 3000
         # 결제금액
         final_price = cart_total_price + delivery_fee
         print(f"상품 합계                     {cart_total_price}원")
@@ -65,7 +67,7 @@ class Cart:
         num = int(input("상품 번호 : "))
         # 제품 목록 중에서 없는 번호를 기입한 경우
         if find_product(num) is None:
-            print("장바구니에 없는 상품입니다.")
+            return print("장바구니에 없는 상품입니다.")
         # 제품 번호를 정상적으로 기입한 경우
         quantity = int(input("수량 : "))
         # 수량을 0보다 적게 기입한 경우
@@ -84,20 +86,22 @@ class Cart:
         num = int(input("상품 번호 : "))
         # 장바구니 내에 없는 번호를 기입한 경우
         if num not in self.products:
-            return "장바구니에 없는 상품입니다."
+            print("장바구니에 없는 상품입니다.")
         # 장바구니에 있는 제품 번호를 기입한 경우
         quantity = int(input("수량 : "))
         # 수량을 0보다 적게 기입한 경우
         if quantity <= 0:
-            return "수량을 1개 이상 입력하세요."
+            print("수량을 1개 이상 입력하세요.")
         total_quantity = self.products.get(num, 0) - quantity # 총 수량 계산
         # 수량이 장바구니에 담긴 수량보다 많은 경우
         if quantity > self.products.get(num, 0):
-            return "장바구니에 담겨진 수량을 확인해주세요."
+            print("장바구니에 담겨진 수량을 확인해주세요.")
         else:
             self.products[num] = total_quantity
             find_product(num).set_inventory(find_product(num).get_inventory() + quantity)
-            return f"{find_product(num).name} {quantity}개를 뺐습니다."
+            print(f"{find_product(num).name} {quantity}개를 뺐습니다.")
+        # 장바구니에 담겨있던 제품의 수량이 0이 되면 장바구니 목록에서 삭제
+
         # for product in PRODUCTS:
         #     if product.number == num:
         #         current = product.inventory
@@ -117,12 +121,11 @@ def find_product(num):
     for product in PRODUCTS:
         if product.number == num:
             return product
-
+# 제품 목록 보여주기
 def show_products():
     print("-"*60)
     for product in PRODUCTS:
-        print(f"{product.name}     {product.get_price()}원    (재고 {product.get_inventory()}개)")
-    print("\n")
+        print(f"{product.number}.{product.name}     {product.get_price()}원    (재고 {product.get_inventory()}개)")
 
 product1 = Product("무선 이어폰", 1, 89_000, 3)
 product1 = Product("텀블러", 2, 15_000, 10)
@@ -132,7 +135,7 @@ product1 = Product("USB허브", 5, 18_000, 4)
 
 cart = Cart()
 
-
+# 메뉴 선택시 발생하는 메소드 또는 함수
 def handle_menu(num):
     if num == 1:
         return show_products()
@@ -149,10 +152,18 @@ def main():
     while True:
         choice_menu = input("선택 : ")
         if choice_menu.isdigit():
-            if 0 < int(choice_menu) < 7:
+            if 0 < int(choice_menu) < 5:
                 handle_menu(int(choice_menu))
+                print("\n")
+                show_title()
+            elif 4 < int(choice_menu) < 8:
+                print("아직 구현되지 않은 기능입니다.")
+                print("\n")
+                show_title()
             else:
                 print("메뉴 목록 안의 숫자 또는 알파벳을 입력해주세요.")
+                print("\n")
+                show_title()
         else:
             if choice_menu == "q":
                 print("종료합니다.")
