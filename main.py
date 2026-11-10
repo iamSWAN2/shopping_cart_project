@@ -102,7 +102,7 @@ class Cart:
             print(f"{find_product(num).name} {quantity}개를 뺐습니다.")
         # 장바구니에 담겨있던 제품의 수량이 0이 되면 장바구니 목록에서 삭제
         for product in self.products:
-            if product.pop(product) == 0:
+            if product.get(product, 0) == 0:
                 del self.products[product]
 
         # for product in PRODUCTS:
