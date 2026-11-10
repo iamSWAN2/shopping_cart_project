@@ -38,6 +38,7 @@ class Product:
 class Cart:
     def __init__(self):
         self.products = {}
+
     # 장바구니에 담긴 물품 확인
     def show_in_cart(self):
         # 장바구니에 담긴 상품 총액
@@ -64,6 +65,7 @@ class Cart:
         print(f"상품 합계                     {cart_total_price}원")
         print(f"배송비                     {delivery_fee}원")
         print(f"결제 금액                     {final_price}원")
+
     # 장바구니에 물품 추가
     def add_product(self):
         num = int(input("상품 번호 : "))
@@ -83,6 +85,7 @@ class Cart:
             self.products[num] = total_quantity
             find_product(num).set_inventory(find_product(num).get_inventory() - quantity)
             print(f"{find_product(num).name} {total_quantity}개를 담았습니다.")
+
     # 장바구니의 물품 빼기
     def remove_product(self):
         num = int(input("상품 번호 : "))
@@ -119,23 +122,27 @@ class Cart:
     #     for product in self.__products:
     #         subtotal += product.price * product.quantity
     #     return subtotal
+
 # 제품 번호로 제품 객체 찾기
 def find_product(num):
     for product in PRODUCTS:
         if product.number == num:
             return product
+
 # 제품 목록 보여주기
 def show_products():
     print("-"*60)
     for product in PRODUCTS:
         print(f"{product.number}.{product.name}     {product.get_price()}원    (재고 {product.get_inventory()}개)")
 
+# 제품 인스턴스 생성
 product1 = Product("무선 이어폰", 1, 89_000, 3)
 product1 = Product("텀블러", 2, 15_000, 10)
 product1 = Product("보조배터리", 3, 32_000, 5)
 product1 = Product("마우스패드", 4, 9000, 0)
 product1 = Product("USB허브", 5, 18_000, 4)
 
+# 카트 인스턴스 생성
 cart = Cart()
 
 # 메뉴 선택시 발생하는 메소드 또는 함수
@@ -149,7 +156,7 @@ def handle_menu(num):
     elif num == 4:
         return cart.show_in_cart()
 
-
+# 프로그램 실행
 def main():
     show_title()
     while True:
@@ -177,16 +184,10 @@ main()
 
 
 # show_title()
-
-
 # cart1 = Cart()
-
-
 # print(cart1.add_product())
 # print(find_product(1).get_inventory())
-
 # print(cart1.remove_product())
 # print(find_product(1).get_inventory())
-
 # cart1.show_in_cart()
 # show_products()
