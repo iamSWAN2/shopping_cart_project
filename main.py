@@ -178,6 +178,10 @@ def main():
             if choice_menu == "q":
                 print("종료합니다.")
                 break
+            else:
+                print("메뉴 목록 안의 숫자 또는 알파벳을 입력해주세요.")
+                print("\n")
+                show_title();
 
 
 main()
