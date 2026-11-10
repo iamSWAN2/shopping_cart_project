@@ -48,6 +48,8 @@ class Cart:
             product_total_price = self.products.get(product, 0) * product_price
             cart_total_price += product_total_price
             print(f"{find_product(product).name}   x   {self.products.get(product, 0)}    {product_total_price}원")
+        if not self.products:
+            print("장바구니에 아무것도 담겨있지 않습니다.")
         print("-"*60)
         # 배송비 계산
         if not self.products:
@@ -99,11 +101,9 @@ class Cart:
         else:
             self.products[num] = total_quantity
             find_product(num).set_inventory(find_product(num).get_inventory() + quantity)
+            if self.products.get(num, 0) == 0:
+                del self.products[num]
             print(f"{find_product(num).name} {quantity}개를 뺐습니다.")
-        # 장바구니에 담겨있던 제품의 수량이 0이 되면 장바구니 목록에서 삭제
-        for product in self.products:
-            if product.get(product, 0) == 0:
-                del self.products[product]
 
         # for product in PRODUCTS:
         #     if product.number == num:
